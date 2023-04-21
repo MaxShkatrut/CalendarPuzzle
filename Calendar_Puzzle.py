@@ -7,6 +7,7 @@ import matplotlib.pyplot as plt
 
 folder = 'Pieces Set 01'
 # folder = 'Pieces Set 02' # With duplicate pieces
+# folder = 'Pieces Set 03' # Find at least one solution for every date
 
 # monthes = ['Jan']
 # days = [1]
@@ -217,15 +218,17 @@ def week_2_calendar(week):
                 x_week[1] = 1.4
 
 def find_corner_zero():
-        corner_zero = [8, 7]
-        for i in range(len(calendar)-1, -1, -1):
-                for j in range(len(calendar[0])-1, -1, -1):
-                        if ((i == 0 or i == 1) and j == 6) or (i == 7 and (j == 0 or j == 1 or j == 2 or j == 3)):
-                                continue
-
+        corner_zero = [-1, -1]
+        breaker = False
+        for i in range(len(calendar)):
+                for j in range(len(calendar[0])):
                         if calendar[i][j] == 0:
                                 corner_zero[0] = i
                                 corner_zero[1] = j
+                                breaker = True
+                                break
+                if breaker:
+                        break
         
         return corner_zero
 
@@ -390,7 +393,7 @@ def save_solution(solution):
 # The backtracking recursive function that checks the combinations
 def check_date(corner_zero, sol_pieces, sol_orient):
         global solutions_counter
-        if corner_zero[0] == 8 and corner_zero[1] == 7:
+        if corner_zero[0] == -1 and corner_zero[1] == -1:
                 sol = create_solution(sol_pieces, sol_orient)
                 if not np.array_equal(sol, np.zeros([8, 7])):
                         solutions_counter = solutions_counter + 1
@@ -463,6 +466,7 @@ for month in monthes:
 # xs = [5, 8, 8, 1, 1, 8, 8, 1, 1, 8, 8, 1, 1, 7]
 # ys = [2, 2, 3, 3, 4, 4, 5, 5, 6, 6, 7, 7, 8, 8]
 # plt.plot(xs, ys, color = 'black')
+# 
 # plt.text(1.15, 8.4, 'Jan', fontsize = 22, fontname = 'Courier New')
 # plt.text(2.15, 8.4, 'Feb', fontsize = 22, fontname = 'Courier New')
 # plt.text(3.15, 8.4, 'Mar', fontsize = 22, fontname = 'Courier New')
@@ -476,15 +480,15 @@ for month in monthes:
 # plt.text(5.15, 7.4, 'Nov', fontsize = 22, fontname = 'Courier New')
 # plt.text(6.15, 7.4, 'Dec', fontsize = 22, fontname = 'Courier New')
 # 
-# plt.text(1.375, 6.4, '1', fontsize = 22, fontname = 'Courier New')
-# plt.text(2.375, 6.4, '2', fontsize = 22, fontname = 'Courier New')
-# plt.text(3.375, 6.4, '3', fontsize = 22, fontname = 'Courier New')
-# plt.text(4.375, 6.4, '4', fontsize = 22, fontname = 'Courier New')
-# plt.text(5.375, 6.4, '5', fontsize = 22, fontname = 'Courier New')
-# plt.text(6.375, 6.4, '6', fontsize = 22, fontname = 'Courier New')
-# plt.text(7.375, 6.4, '7', fontsize = 22, fontname = 'Courier New')
-# plt.text(1.375, 5.4, '8', fontsize = 22, fontname = 'Courier New')
-# plt.text(2.375, 5.4, '9', fontsize = 22, fontname = 'Courier New')
+# plt.text(1.375, 6.4, '1',  fontsize = 22, fontname = 'Courier New')
+# plt.text(2.375, 6.4, '2',  fontsize = 22, fontname = 'Courier New')
+# plt.text(3.375, 6.4, '3',  fontsize = 22, fontname = 'Courier New')
+# plt.text(4.375, 6.4, '4',  fontsize = 22, fontname = 'Courier New')
+# plt.text(5.375, 6.4, '5',  fontsize = 22, fontname = 'Courier New')
+# plt.text(6.375, 6.4, '6',  fontsize = 22, fontname = 'Courier New')
+# plt.text(7.375, 6.4, '7',  fontsize = 22, fontname = 'Courier New')
+# plt.text(1.375, 5.4, '8',  fontsize = 22, fontname = 'Courier New')
+# plt.text(2.375, 5.4, '9',  fontsize = 22, fontname = 'Courier New')
 # plt.text(3.25,  5.4, '10', fontsize = 22, fontname = 'Courier New')
 # plt.text(4.25,  5.4, '11', fontsize = 22, fontname = 'Courier New')
 # plt.text(5.25,  5.4, '12', fontsize = 22, fontname = 'Courier New')
@@ -508,12 +512,12 @@ for month in monthes:
 # plt.text(2.25,  2.4, '30', fontsize = 22, fontname = 'Courier New')
 # plt.text(3.25,  2.4, '31', fontsize = 22, fontname = 'Courier New')
 # 
-# plt.text(4.15,  2.4, 'Sun', fontsize = 22, fontname = 'Courier New')
-# plt.text(5.15,  2.4, 'Mon', fontsize = 22, fontname = 'Courier New')
+# plt.text(4.15,  2.4, 'Sun',  fontsize = 22, fontname = 'Courier New')
+# plt.text(5.15,  2.4, 'Mon',  fontsize = 22, fontname = 'Courier New')
 # plt.text(6.025, 2.4, 'Tues', fontsize = 22, fontname = 'Courier New')
-# plt.text(7.15,  2.4, 'Wed', fontsize = 22, fontname = 'Courier New')
+# plt.text(7.15,  2.4, 'Wed',  fontsize = 22, fontname = 'Courier New')
 # plt.text(5.025, 1.4, 'Thur', fontsize = 22, fontname = 'Courier New')
-# plt.text(6.15,  1.4, 'Fri', fontsize = 22, fontname = 'Courier New')
-# plt.text(7.15,  1.4, 'Sat', fontsize = 22, fontname = 'Courier New')
+# plt.text(6.15,  1.4, 'Fri',  fontsize = 22, fontname = 'Courier New')
+# plt.text(7.15,  1.4, 'Sat',  fontsize = 22, fontname = 'Courier New')
 # ======== Temp ======== #
 
